@@ -1,0 +1,9 @@
+{
+  "packages": [
+    {
+      "group": "com.google.code.gson",
+      "artifact": "gson",
+      "version": "2.10.1"
+    }
+  ]
+}
