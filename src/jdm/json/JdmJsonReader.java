@@ -9,7 +9,7 @@ import com.google.gson.Gson;
 import jdm.json.structure.JdmJson;
 
 public class JdmJsonReader {
-  public static JdmJson readJdmJson() throws Exception {
+  public static JdmJson readJdmJson() throws FileNotFoundException {
     String JdmJsonPath = System.getProperty("user.dir") + "/jdm.json";
 
     File jsonFile = new File(JdmJsonPath);

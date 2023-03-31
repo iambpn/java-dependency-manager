@@ -1,4 +1,6 @@
 {
+  "name": "",
+  "description": "",
   "packages": [
     {
       "group": "com.google.code.gson",

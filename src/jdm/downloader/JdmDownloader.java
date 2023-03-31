@@ -1,11 +1,14 @@
 package jdm.downloader;
 
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+
+import jdm.common.Common;
 
 public class JdmDownloader {
   private String outputPath;
@@ -16,8 +19,8 @@ public class JdmDownloader {
     this.basePath = basePath;
   }
 
-  public void downlaodLib(String group, String artifact, String version) throws Exception {
-    String url = String.format("%s/%s/%s/%s/%s-%s.jar", this.basePath, this.joinString(group.split("\\."), "/"),
+  public void downlaodLib(String group, String artifact, String version) throws IOException, InterruptedException {
+    String url = String.format("%s/%s/%s/%s/%s-%s.jar", this.basePath, Common.joinString(group.split("\\."), "/"),
         artifact,
         version, artifact, version);
     String outputFileName = String.format("%s-%s-%s.jar", group, artifact, version);
@@ -44,13 +47,5 @@ public class JdmDownloader {
       System.out.println("Failed to download data: " + response.statusCode());
       System.out.println(url);
     }
-  }
-
-  private String joinString(String[] splittedStr, String joinAt) {
-    String joinedString = "";
-    for (String str : splittedStr) {
-      joinedString += joinAt + str;
-    }
-    return joinedString.substring(1);
   }
 }
