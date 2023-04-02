@@ -14,3 +14,8 @@ javac -cp ".:lib/*" -d bin $(find ./src/* | grep .java)
 ```
 jar --create --file jdm.jar --manifest=MANIFEST.MF -C bin/ .
 ```
+
+# Pack jar file to executable with (packr)[https://github.com/libgdx/packr]
+```
+java -jar packr.jar packr.json
+```
