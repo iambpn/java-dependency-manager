@@ -9,8 +9,6 @@ import jdm.common.Common;
 public class JdmJson {
   private String name;
   private String description;
-  private String main = Common.defaultMainPath;
-  private String target = Common.defaultCompilePath;
   private List<String> classPaths = new ArrayList<>();
   private List<JdmPackage> packages = new ArrayList<>();
 
@@ -42,22 +40,6 @@ public class JdmJson {
     this.packages = packages;
   }
 
-  public String getMain() {
-    return main;
-  }
-
-  public void setMain(String main) {
-    this.main = main;
-  }
-
-  public String getTarget() {
-    return target;
-  }
-
-  public void setTarget(String target) {
-    this.target = target;
-  }
-
   public List<String> getClassPaths() {
     return classPaths;
   }
@@ -68,7 +50,7 @@ public class JdmJson {
 
   @Override
   public String toString() {
-    return "JdmJson [name=" + name + ", description=" + description + ", main=" + main + ", target=" + target
-        + ", classPaths=" + classPaths + ", packages=" + packages + "]";
+    return "JdmJson [name=" + name + ", description=" + description + ", classPaths=" + classPaths + ", packages="
+        + packages + "]";
   }
 }

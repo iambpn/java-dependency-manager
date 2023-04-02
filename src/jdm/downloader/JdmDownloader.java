@@ -20,7 +20,9 @@ public class JdmDownloader {
   }
 
   public void downlaodLib(String group, String artifact, String version) throws IOException, InterruptedException {
-    String url = String.format("%s/%s/%s/%s/%s-%s.jar", this.basePath, Common.joinString(group.split("\\."), "/"),
+    String url = String.format("%s/%s/%s/%s/%s-%s.jar",
+        this.basePath,
+        String.join("/", group.split("\\.")),
         artifact,
         version, artifact, version);
     String outputFileName = String.format("%s-%s-%s.jar", group, artifact, version);

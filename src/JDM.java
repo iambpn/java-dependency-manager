@@ -1,10 +1,11 @@
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.StringJoiner;
 
 import jdm.common.Common;
@@ -26,7 +27,7 @@ public class JDM {
     }
   }
 
-  public static void main(String[] args) {
+  public static void main(String[] args) throws IOException, InterruptedException {
     JDM jdm = new JDM();
 
     if (args.length == 0) {
@@ -50,12 +51,6 @@ public class JDM {
           printUsage();
           exitCode = 1;
         }
-        break;
-      case "run":
-        exitCode = jdm.run();
-        break;
-      case "build":
-        exitCode = jdm.build();
         break;
       case "fetch":
         exitCode = jdm.fetch();
@@ -86,40 +81,6 @@ public class JDM {
     return 0;
   }
 
-  private int build() {
-    String classPaths = this.buildClassPaths(this.json.getClassPaths());
-    String mainFileParentPath = Paths.get(Common.rootDir, json.getMain()).getParent().resolve("*").toString();
-    String targetPath = Paths.get(Common.rootDir, this.json.getTarget()).toString();
-    try {
-      System.out.println("Build: " + String.format(Common.compileCmd, classPaths, targetPath, mainFileParentPath));
-      return runShellCommand(String.format(Common.compileCmd, classPaths, targetPath, mainFileParentPath));
-    } catch (IOException | InterruptedException e) {
-      System.out.println("ERROR WHILE BUILDING PROJECT.");
-      System.out.println("Caused by: " + e.getMessage());
-      return 1;
-    }
-  }
-
-  private int run() {
-    int exitCode = this.build();
-
-    if (exitCode == 1) {
-      return 1;
-    }
-
-    String mainFileName = Paths.get(Common.rootDir, json.getMain()).getFileName().toString();
-    try {
-      System.out.println(
-          "Run: " + String.format(Common.runCmd, Paths.get(Common.rootDir, this.json.getTarget(), mainFileName)));
-      return runShellCommand(
-          String.format(Common.runCmd, Paths.get(Common.rootDir, this.json.getTarget(), mainFileName)));
-    } catch (IOException | InterruptedException e) {
-      System.out.println("ERROR WHILE RUNNING PROJECT.");
-      System.out.println("Caused by: " + e.getMessage());
-      return 1;
-    }
-  }
-
   private int init(String option) {
     try {
       switch (option.toLowerCase()) {
@@ -142,34 +103,12 @@ public class JDM {
     }
   }
 
-  private String buildClassPaths(List<String> classPaths) {
-    StringJoiner classPathJoiner = new StringJoiner(File.pathSeparator);
-    for (String classPath : classPaths) {
-      classPathJoiner.add(Paths.get(Common.rootDir, classPath).toString());
-    }
-    return classPathJoiner.toString();
-  }
-
   private static void printUsage() {
     System.out.printf("Usage: java JDM <command> [<args>]%n%n");
     System.out.println("Commands:");
     System.out.printf("  %-20s %s%n", "help [--help -h]", "Usage help");
     System.out.printf("  %-20s %s%n", "init <option>",
         "Initialize 'jdm.json' or '.vscode/settings.json'. Options: jdm, vscode");
-    System.out.printf("  %-20s %s%n", "run", "Run the project");
-    System.out.printf("  %-20s %s%n", "build", "Build the project");
     System.out.printf("  %-20s %s%n", "fetch", "Fetch dependencies");
-  }
-
-  private int runShellCommand(String command) throws IOException, InterruptedException {
-    Process process = Runtime.getRuntime().exec(command);
-    process.waitFor();
-    BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-    String line;
-    while ((line = reader.readLine()) != null) {
-      System.out.println(line);
-    }
-    reader.close();
-    return process.exitValue();
   }
 }
