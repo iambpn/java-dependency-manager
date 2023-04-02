@@ -1,5 +1,8 @@
 # java-dependency-manager
 
+## Docs
+ - https://docs.oracle.com/javase/tutorial/deployment/jar/downman.html
+
 ## Compile java file
 
 ```
