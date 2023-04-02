@@ -1,12 +1,6 @@
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.StringJoiner;
 
 import jdm.common.Common;
 import jdm.downloader.JdmDownloader;
@@ -23,7 +17,6 @@ public class JDM {
       this.json = JdmJsonReader.readJdmJson();
     } catch (FileNotFoundException e) {
       System.out.println("jdm.json file not found.");
-      System.exit(1);
     }
   }
 
@@ -69,6 +62,12 @@ public class JDM {
     JdmDownloader downloader = new JdmDownloader(
         Paths.get(Common.rootDir, Common.defaultLibPath).toString(),
         Common.repoBaseURL);
+
+    if (this.json == null) {
+      System.out.println("jdm.json file not found.");
+      return 1;
+    }
+
     for (JdmPackage pkg : this.json.getPackages()) {
       System.out.println(String.format("Downloading %s...", pkg.getArtifact()));
       try {
@@ -85,10 +84,10 @@ public class JDM {
     try {
       switch (option.toLowerCase()) {
         case "jdm":
-          FileInitializer.createFile(Common.jdmJsonPath, "{}");
+          FileInitializer.createFile(Common.jdmJsonPath, Common.jdmJsonTemplate);
           break;
         case "vscode":
-          FileInitializer.createFile(Common.vscodeSettingPath, "{}");
+          FileInitializer.createFile(Common.vscodeSettingPath, Common.vscodeSettingsTemplate);
           break;
         default:
           System.out.println("Unknown Option: " + option);
