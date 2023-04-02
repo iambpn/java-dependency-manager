@@ -1,6 +1,6 @@
 {
   "platform": "windows64",
-  "jdk": "/home/acer/Downloads/openlogic-openjdk-11.0.18+10-linux-x64.tar.gz",
+  "jdk": "./openjdk-11.0.18+10-linux-x64.tar.gz",
   "executable": "jdm",
   "classpath": ["./jdm.jar", "./lib/com.google.code.gson-gson-2.10.1.jar"],
   "mainclass": "JDM",

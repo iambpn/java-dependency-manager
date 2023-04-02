@@ -12,7 +12,9 @@ public class Common {
   public final static String vscodeSettingPath = Paths.get(rootDir, ".vscode", "settings.json").toString();
 
   public final static String jdmJsonTemplate = "{\n" +
-      "  \"name\": \"\",\n" +
+      "  \"group\": \"\",\n" +
+      "  \"artifact\": \"\",\n" +
+      "  \"version\": \"\",\n" +
       "  \"description\": \"\",\n" +
       "  \"packages\": []\n" +
       "}";

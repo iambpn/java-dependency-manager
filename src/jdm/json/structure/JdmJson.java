@@ -7,7 +7,9 @@ import java.util.List;
 import jdm.common.Common;
 
 public class JdmJson {
-  private String name;
+  private String group;
+  private String artifact;
+  private String version;
   private String description;
   private List<String> classPaths = new ArrayList<>();
   private List<JdmPackage> packages = new ArrayList<>();
@@ -18,14 +20,6 @@ public class JdmJson {
 
   public List<JdmPackage> getPackages() {
     return packages;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
   }
 
   public String getDescription() {
@@ -48,9 +42,34 @@ public class JdmJson {
     this.classPaths = classPaths;
   }
 
+  public String getGroup() {
+    return group;
+  }
+
+  public void setGroup(String group) {
+    this.group = group;
+  }
+
+  public String getArtifact() {
+    return artifact;
+  }
+
+  public void setArtifact(String artifact) {
+    this.artifact = artifact;
+  }
+
+  public String getVersion() {
+    return version;
+  }
+
+  public void setVersion(String version) {
+    this.version = version;
+  }
+
   @Override
   public String toString() {
-    return "JdmJson [name=" + name + ", description=" + description + ", classPaths=" + classPaths + ", packages="
-        + packages + "]";
+    return "JdmJson [group=" + group + ", artifact=" + artifact + ", version=" + version + ", description="
+        + description + ", classPaths=" + classPaths + ", packages=" + packages + "]";
   }
+
 }
